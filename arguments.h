@@ -13,6 +13,7 @@ private:
 
     TCLAP::CmdLine parser;
     TCLAP::SwitchArg case_insensitive;
+    TCLAP::SwitchArg stand_alone;
     TCLAP::ValueArg<std::string> needle_arg;
     TCLAP::ValueArg<std::string> filename;
     TCLAP::ValueArg<std::string> mode;

@@ -1,7 +1,11 @@
 
 #include "checksum.h"
 #include <cstring>
-#include <netinet/in.h> // TODO: seems not portable
+#ifdef __WIN64__
+#include <winsock.h>
+#elif __linux__
+#include <netinet/in.h>
+#endif
 #include <iostream>
 
 uint64_t ChecksumMode::process(std::istream& input) {

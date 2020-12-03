@@ -42,6 +42,12 @@ Arguments::Arguments()
         , "Set this flag, if you need case insensitive search"
         , parser
     )
+    , stand_alone(
+        "s"
+        , "standalone"
+        , "Set this flag, if you wish to search for separate word, not just substring"
+        , parser
+    )
 {
     modes.emplace("words", &Arguments::process_words);
     modes.emplace("checksum", &Arguments::process_checksum);
@@ -76,11 +82,11 @@ void Arguments::process_checksum() {
 void Arguments::process_words() {
     auto& needle = needle_arg.getValue();
     if (filename.getValue() == "-") {
-        auto counter = WordsMode::process(std::cin, needle, case_insensitive.getValue());
+        auto counter = WordsMode::process(std::cin, needle, case_insensitive.getValue(), stand_alone.getValue());
         std::cout << "File contains " << counter << " substrings \"" << needle << '\"' << std::endl;
     }
     else if (auto file = std::ifstream (filename.getValue()); file.is_open()) {
-        auto counter = WordsMode::process(file, needle, case_insensitive.getValue());
+        auto counter = WordsMode::process(file, needle, case_insensitive.getValue(), stand_alone.getValue());
         std::cout << "File contains " << counter << " substrings \"" << needle << '\"' << std::endl;
     }
     else {
