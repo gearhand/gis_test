@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <iostream>
 #include <regex>
+#include <sstream>
+#include <functional>
 
 uint64_t WordsMode::process(std::istream &input, std::string const& needle, bool case_insensitive, bool stand_alone) {
     if (stand_alone) {
@@ -42,11 +44,19 @@ uint64_t WordsMode::process_substrings(std::istream& input, std::string const& n
     // We can search for a substring, we can search for separate words
     // if substring, we can use boyer-moore-horspool
     if (!needle.empty()) {
-        auto comparator = case_insensitive ? [] (char lhs, char rhs) -> bool {
-                lhs = std::tolower(lhs, std::locale("en_US.UTF-8"));
-                rhs = std::tolower(rhs, std::locale("en_US.UTF-8"));
-                return lhs == rhs; }
-                : [] (char lhs, char rhs) -> bool { return lhs == rhs; };
+        static auto case_comp = [] (char lhs, char rhs) -> bool { return lhs == rhs; };
+        static auto icase_comp = [] (char lhs, char rhs) -> bool {
+            lhs = std::tolower(lhs, std::locale("en_US.UTF-8"));
+            rhs = std::tolower(rhs, std::locale("en_US.UTF-8"));
+            return lhs == rhs;
+        };
+        bool (*comparator)(char, char) = nullptr;
+        if (case_insensitive) {
+            comparator = icase_comp;
+        } else
+        {
+            comparator = case_comp;
+        }
         std::boyer_moore_horspool_searcher searcher (
             needle.begin()
             , needle.end()

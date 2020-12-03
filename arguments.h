@@ -3,6 +3,7 @@
 #include <tclap/ValueArg.h>
 #include <tclap/SwitchArg.h>
 #include <tclap/CmdLine.h>
+#include <unordered_map>
 class Arguments {
 public:
     Arguments();

@@ -1,10 +1,10 @@
 
 #include "checksum.h"
 #include <cstring>
-#ifdef __WIN64__
-#include <winsock.h>
-#elif __linux__
+#ifdef __linux__
 #include <netinet/in.h>
+#else
+#include <winsock.h>
 #endif
 #include <iostream>
 

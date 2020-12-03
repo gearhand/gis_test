@@ -1,7 +1,3 @@
-//
-// Created by igor on 02.12.2020.
-//
-
 #include "arguments.h"
 #include "checksum.h"
 #include "words.h"
@@ -48,6 +44,7 @@ Arguments::Arguments()
         , "Set this flag, if you wish to search for separate word, not just substring"
         , parser
     )
+    , modes()
 {
     modes.emplace("words", &Arguments::process_words);
     modes.emplace("checksum", &Arguments::process_checksum);
