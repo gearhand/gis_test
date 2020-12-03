@@ -1,16 +1,7 @@
 #include <iostream>
 
-#include <tclap/CmdLine.h>
-#include <tclap/ValueArg.h>
-#include <unordered_map>
-#include <fstream>
+#include <tclap/ArgException.h>
 #include "arguments.h"
-
-//enum class OperationMode {
-//    WORDS,
-//    CHECKSUM,
-//    NONE,
-//};
 
 int main(int argc, char** argv) {
     try {

@@ -26,13 +26,14 @@ uint64_t WordsMode::process(std::istream& input, std::string needle, bool case_i
         std::string line;
         uint64_t counter = 0;
         //std::getline(file, line, '\n'); // We assume, that 'needle' is alphanum
-        while (std::getline(input, line, '\n'), (!line.empty() && !input.eof())) {
+        while (std::getline(input, line, '\n'), (!line.empty())) {
             if (line.size() < needle.size()) continue;
             auto found = std::search(line.begin(), line.end(), searcher);
             while (found != line.end()) {
                 counter += 1;
                 found = std::search(found + size, line.end(), searcher);
             }
+            line.erase();
         }
         return counter;
     } else {
